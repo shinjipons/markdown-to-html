@@ -24,9 +24,10 @@ Here are my requirements:
 - Repeating events
 - Events can be shared with other people
 - Adding other calendars such as official holidays and sports events such as Premier League fixtures and Formula 1 races.
-- Nice-to-haves:
-	- have a one-click add to calendar working with my email provider [Proton Mail](https://protonmail.com/).
-	- integrates with Cal.com
+
+Nice-to-haves:
+- have a one-click add to calendar working with my email provider [Proton Mail](https://protonmail.com/).
+- integrates with Cal.com
 
 # The problems
 
@@ -63,7 +64,7 @@ Nope that wasn't it. I found out after a few minutes that you need to right-clic
 
 But at least, you can change the "time scale" very quickly and easily by right-clicking on the time. Very nice!
 
-!()[media/about-calendars/outlook-time-scale.png]
+!(Not the best way to do this...)[media/about-calendars/outlook-time-scale.png]
 
 OK. What about Outlook's iOS application?
 
