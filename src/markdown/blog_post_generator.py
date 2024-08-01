@@ -42,8 +42,13 @@ def generate_html_from_markdown():
                 line_html = f'<p>{line}</p>'
                 html_lines.append(line_html)
 
-    for html_line in html_lines: # Testing, print every line separately
-        print(replace_bold(replace_link(html_line)))
+    for html_line in html_lines:
+        html_line = replace_bold(html_line)
+        html_line = replace_link(html_line)
+
+    # for html_line in html_lines: # For testing only!
+    #     print(html_line)
+
     return html_lines
 
 # Utility functions
