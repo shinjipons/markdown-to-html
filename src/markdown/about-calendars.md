@@ -100,7 +100,7 @@ Let's go through them one by one.
 10. Lark Calendar: looks like a bloaty app targeted to businesses.
 11. Microsoft Exchange: irrelevant.
 12. Microsoft Exchange 2016 Calendar: irrelevant.
-13. Micrsooft Exchange 2013 Calendar: irrelevant.
+13. Microsoft Exchange 2013 Calendar: irrelevant.
 
 # Proton Calendar
 
