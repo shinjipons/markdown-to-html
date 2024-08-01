@@ -9,7 +9,6 @@ def generate_html_from_markdown():
         lines = markdown_content.split('\n')
 
         for line in lines:
-            if line.startswith('#'):
             if len(line) == 0:
                 # Empty line so ignore it
                 pass
@@ -27,7 +26,6 @@ def generate_html_from_markdown():
                 html_lines.append(bullet_point_html)
             elif line.startswith('!('):
                 # Media (images and videos)
-                media_url = line.strip('!()[]')
                 media_caption = extract_parentheses(line)
                 media_url = extract_brackets(line)
                 if media_url.endswith('.mp4'):
@@ -44,7 +42,6 @@ def generate_html_from_markdown():
                     html_lines.append(image_html)
             elif line.startswith(("1", "2", "3", "4", "5", "6", "7", "8", "9")): # Ugly but works
                 # Numbered lists
-                # numbered_list_item_html = f'<p>{line}</p>'
                 numbered_list_item_html = f'<li>{line}</li>'
             else:
                 # Normal text paragraphs
@@ -95,15 +92,12 @@ def replace_link(text):
 
         # Add text before the link and the converted link
         result += text[start:open_bracket]
-        result += f'<a href="{link_url}">{link_text}</a>'
         result += f'<a href="{link_url}" target="_blank">{link_text}</a>' # Make links open in new tab
 
         # Move start to after this link
         start = close_paren + 1
-
     return result
 
-test_line = "<p>I got a error message because the app-specific password you use inside of Outlook must be used with the @icloud.com adress tied to your Apple ID account. If you use the email adress that you use to sign in with your Apple ID, you will get an error! How are you supposed to know that? Well, you DON'T because neither the [Apple Support](https://support.apple.com/en-gb/guide/icloud-windows/icwa12798053/icloud) nor the [Windows support](https://support.microsoft.com/en-gb/office/add-or-manage-an-icloud-email-account-in-outlook-4aed8b3d-3c68-4743-8973-f6bd1c56e040) pages mention that anywhere.</p>"
 def replace_bold(text):
     i = 0
     result = ""
