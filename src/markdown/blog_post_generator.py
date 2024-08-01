@@ -83,6 +83,7 @@ def replace_link(text):
         # Add text before the link and the converted link
         result += text[start:open_bracket]
         result += f'<a href="{link_url}">{link_text}</a>'
+        result += f'<a href="{link_url}" target="_blank">{link_text}</a>' # Make links open in new tab
 
         # Move start to after this link
         start = close_paren + 1
