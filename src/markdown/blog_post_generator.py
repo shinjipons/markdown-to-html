@@ -58,6 +58,14 @@ def extract_parentheses(string):
             return string[start + 1 : end]
     return None # Return None if parentheses are not found
 
+def extract_brackets(string):
+    start = string.find('[')
+    if start != -1: # Check if '(' is found
+        end = string.find(']', start)
+        if end != -1: # Check if ')' is found
+            return string[start + 1 : end]
+    return None # Return None if parentheses are not found
+
 def replace_link(text):
     start = 0
     result = ""
