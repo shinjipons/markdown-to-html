@@ -29,19 +29,20 @@ def generate_html_from_markdown():
                 # Media (images and videos)
                 media_url = line.strip('!()[]')
                 media_caption = extract_parentheses(line)
+                media_url = extract_brackets(line)
                 if media_url.endswith('.mp4'):
                     # Videos, without captions for now
                     video_html = f"""<video autoplay loop><source src="{media_url}" type="video/mp4"></video>"""
                     html_lines.append(video_html)
+                elif len(media_caption) == 0:
+                    # image without caption
+                    image_html = f"""<picture><img src="{media_url}"></picture>"""
+                    html_lines.append(image_html)
                 else:
-                    # Images
-                    if len(media_caption) != 0: # This media has a "caption"
-                        image_html = f"""<picture><img src="{media_url}"><p class="caption">{media_caption}</p></picture>"""
-                        html_lines.append(image_html)
-                    else:
-                        image_html = f"""<picture><img src="{media_url}"></picture>"""
-                        html_lines.append(image_html)
-            # elif type(line[0]) == int:
+                    # image with caption
+                    image_html = f"""<picture><img src="{media_url}"><p class="caption">{media_caption}</p></picture>"""
+                    html_lines.append(image_html)
+            elif line.startswith(("1", "2", "3", "4", "5", "6", "7", "8", "9")): # Ugly but works
                 # Numbered lists
                 # numbered_list_item_html = f'<p>{line}</p>'
                 numbered_list_item_html = f'<li>{line}</li>'
