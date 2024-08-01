@@ -34,6 +34,10 @@ def generate_html_from_markdown():
                     html_lines.append(image_html)
             elif line.startswith(("1", "2", "3", "4", "5", "6", "7", "8", "9")): # Numbered lists (ugly but works)
                 numbered_list_item_html = f'<li>{line}</li>'
+            elif line.startswith('> '): # Quotes
+                quote_text = line.lstrip("> ")
+                quote_html = f"""<div class="blog-quote"><p>{quote_text}</p></div>"""
+                html_lines.append(quote_html)
             else: # Normal text paragraphs
                 line_html = f'<p>{line}</p>'
                 html_lines.append(line_html)
