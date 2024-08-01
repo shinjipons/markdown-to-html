@@ -118,13 +118,38 @@ def replace_bold(text):
             i += 1
     return result
 
+def wrap_list_with_prefix(input_list, prefix, opening_html_tag):
+    def create_after_item(item):
+        return item[:1] + "/" + item[1:]
+
+    result = input_list.copy()
+    i = 0
+    while i < len(result):
+        if result[i].startswith(prefix):
+            # Find the end of the contiguous block
+            j = i + 1
+            while j < len(result) and result[j].startswith(prefix):
+                j += 1
+
+            # Insert items before and after the block
+            result.insert(i, opening_html_tag)
+            result.insert(j + 1, create_after_item(opening_html_tag))
+
+            # Move the index past the block and new items
+            i = j + 2
+        else:
+            i += 1
+
+    return result
+
 # Generate some simple ass shit HTML from it
-generate_html_from_markdown()
-# print(generate_html_from_markdown())
+print(wrap_list_with_prefix(generate_html_from_markdown(), "<li>", "<ul>"))
+
 
 # todo
-# front matter support
-# <ul> and <ol> wrapper support
+# <ol> wrapper support
 # code block support
 
 # done
+# <ul> wrapper support
+# front matter support
