@@ -1,6 +1,5 @@
 ---
 date: 2024-07-29
-author: Shinji Pons
 title: "About Digital Calendars"
 ---
 
