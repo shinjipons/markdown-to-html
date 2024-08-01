@@ -41,8 +41,9 @@ def generate_html_from_markdown():
             else: # Normal text paragraphs
                 line_html = f'<p>{line}</p>'
                 html_lines.append(line_html)
-    # for html_line in html_lines:
-        # print(replace_bold(replace_link(html_line)))
+
+    for html_line in html_lines: # Testing, print every line separately
+        print(replace_bold(replace_link(html_line)))
     return html_lines
 
 # Utility functions
@@ -114,3 +115,11 @@ def replace_bold(text):
 
 # Generate some simple ass shit HTML from it
 generate_html_from_markdown()
+# print(generate_html_from_markdown())
+
+# todo
+# front matter support
+# <ul> and <ol> wrapper support
+# code block support
+
+# done
