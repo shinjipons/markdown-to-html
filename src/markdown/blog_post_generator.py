@@ -44,14 +44,13 @@ def generate_html_from_markdown():
             # elif type(line[0]) == int:
                 # Numbered lists
                 # numbered_list_item_html = f'<p>{line}</p>'
+                numbered_list_item_html = f'<li>{line}</li>'
             else:
-                if len(line) !=0:
-                    # Normal text, paragraphs
-                    line_html = f'<p>{line}</p>'
-                    html_lines.append(line_html)
-    # print(html_lines)
-    for html_line in html_lines:
-        replace_link(html_line)
+                # Normal text paragraphs
+                line_html = f'<p>{line}</p>'
+                html_lines.append(line_html)
+    # for html_line in html_lines:
+        # print(replace_bold(replace_link(html_line)))
 
 # Utility functions
 def extract_parentheses(string):
