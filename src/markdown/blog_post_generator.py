@@ -52,6 +52,7 @@ def generate_html_from_markdown():
                 html_lines.append(line_html)
     # for html_line in html_lines:
         # print(replace_bold(replace_link(html_line)))
+    return html_lines
 
 # Utility functions
 def extract_parentheses(string):
