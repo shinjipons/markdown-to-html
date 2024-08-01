@@ -10,6 +10,10 @@ def generate_html_from_markdown():
 
         for line in lines:
             if line.startswith('#'):
+            if len(line) == 0:
+                # Empty line so ignore it
+                pass
+            elif line.startswith('#'):
                 # Headers
                 header_parts = line.split(' ')
                 header_level = len(header_parts[0])
