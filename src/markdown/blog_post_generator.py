@@ -8,7 +8,7 @@ def generate_html_from_markdown():
         lines = markdown_content.split('\n')
 
         for line in lines:
-            if len(line) == 0: # Empty line so ignore it
+            if len(line) == 0 or line.startswith(("---", "date:", "title:", "author:")): # Empty lines and front matter
                 pass
             elif line.startswith('#'): # Headers
                 header_parts = line.split(' ')
