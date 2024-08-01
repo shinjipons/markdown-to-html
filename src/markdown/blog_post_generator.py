@@ -90,6 +90,25 @@ def replace_link(text):
     return result
 
 test_line = "<p>I got a error message because the app-specific password you use inside of Outlook must be used with the @icloud.com adress tied to your Apple ID account. If you use the email adress that you use to sign in with your Apple ID, you will get an error! How are you supposed to know that? Well, you DON'T because neither the [Apple Support](https://support.apple.com/en-gb/guide/icloud-windows/icwa12798053/icloud) nor the [Windows support](https://support.microsoft.com/en-gb/office/add-or-manage-an-icloud-email-account-in-outlook-4aed8b3d-3c68-4743-8973-f6bd1c56e040) pages mention that anywhere.</p>"
+def replace_bold(text):
+    i = 0
+    result = ""
+    while i < len(text):
+        if text[i:i+2] == '**':
+            j = i + 2
+            while j < len(text) and text[j:j+2] != '**':
+                j += 1
+            if j < len(text):
+                # Add <b> and </b> around the bold text
+                result += '<b>' + text[i+2:j] + '</b>'
+                i = j + 2
+            else:
+                result += text[i:]
+                break
+        else:
+            result += text[i]
+            i += 1
+    return result
 
 # Generate some simple ass shit HTML from it
 generate_html_from_markdown()
