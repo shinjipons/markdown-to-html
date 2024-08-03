@@ -47,7 +47,7 @@ Its main downsides are:
 
 But I want to use Outlook's desktop application. Now about that...
 
-!()[media/about-calendars/outlook-desktop.png]
+!()[media/about-calendars/outlook-or-new.png]
 
 You have **Outlook** and **Outlook (new)**. OK, let's use the new one...
 
@@ -149,7 +149,7 @@ I noticed that inside of **Amie**'s desktop app, it's impossible to add more tha
 
 **Notion Calendar** offers something interesting where it presents itself as the "time management app for your life". But both the Windows desktop and iOS apps have some quirks that will take some getting used to, mainly the custom looking notifications on Windows and the slightly buggy UI when pinching in/out on iOS.
 
-!()[media/notion-calendar-zoom-bug.mp4]
+!()[media/about-calendars/notion-calendar-zoom-bug.mp4]
 
 # Conclusion
 
