@@ -1,16 +1,28 @@
 import os
 
-# Set the output folder
+# The global variables
 OUTPUT_FOLDER = 'dist/blog'
+markdown_src_directory = "src/markdown"
+ul_list_item_class = "bullet-point-list-item"
+ol_list_item_class = "numbered-list-item"
+code_block_class = "blog-code-block"
 
 # Create the output folder if it doesn't exist
 if not os.path.exists(OUTPUT_FOLDER):
     os.makedirs(OUTPUT_FOLDER)
 
-html_lines = []
-ul_list_item_class = "bullet-point-list-item"
-ol_list_item_class = "numbered-list-item"
-code_block_class = "blog-code-block"
+# Find all the markdown files inside of a directory
+def get_all_markdown_filepaths(directory_path):
+
+    # Ensure the directory exists
+    if not os.path.isdir(directory_path):
+        raise ValueError(f"The specified path is not a directory: {directory_path}")
+
+    # Ger all markdown files in the directory
+    markdown_filepaths = [f"{directory_path}/{f}" for f in os.listdir(directory_path) if f.endswith('.md')]
+
+    # return markdown_filepaths, markdown_file_names
+    return markdown_filepaths
 
 # Main function thath does the magic
 def generate_html_from_markdown(markdown_filepath):
@@ -133,6 +145,7 @@ def wrap_list_with_prefix(input_list, prefix, opening_html_tag):
         return item[:1] + "/" + item[1:]
 
     result = input_list.copy()
+
     i = 0
     while i < len(result):
         if result[i].startswith(prefix):
@@ -152,55 +165,19 @@ def wrap_list_with_prefix(input_list, prefix, opening_html_tag):
 
     return result
 
-# Replace the bold ** with <b> tags
-html_lines_b = []
-for line in generate_html_from_markdown("src/markdown/about-calendars.md"):
-    if "**" in line:
-        html_lines_b.append(replace_bold(line))
-    else:
-        html_lines_b.append(line)
+def get_frontmatter_item(markdown_filepath, frontmatter_item):
+    result = ""
 
-# Replace the ()[] with <a> tags
-html_lines_b_a = []
-for line in html_lines_b:
-    if "](" in line:
-        html_lines_b_a.append(replace_link(line))
-    else:
-        html_lines_b_a.append(line)
-
-# Wrapping the numbered and unordered list needs to happens outside of the main function, because they need to have "visibility" over the whole list
-html_lines_b_a_ul = wrap_list_with_prefix(html_lines_b_a, f"\t<li class=\"{ul_list_item_class}\">", "<ul>")
-html_lines_b_a_ul_ol = wrap_list_with_prefix(html_lines_b_a_ul, f"\t<li class=\"{ol_list_item_class}\">", "<ol>")
-
-# Now deal with the code block
-html_lines_b_a_ul_ol_code = [] # Finished code!
-count = 0
-for line in html_lines_b_a_ul_ol:
-    if line.lower() == "<p>```</p>":
-        if count % 2 == 0: # it's an opening tag
-            new_line = f"""<div class=\"{code_block_class}\">"""
-            html_lines_b_a_ul_ol_code.append(new_line)
-            count += 1
-        else: # it's a closing tag
-            new_line = f"""</div>"""
-            html_lines_b_a_ul_ol_code.append(new_line)
-            count += 1
-    else: # don't do anything
-        html_lines_b_a_ul_ol_code.append(line)
-
-# Generate the post title
-def get_post_title(markdown_filepath):
-    post_title = ""
-
-    with open(markdown_filepath, 'r') as file:
+    with open(markdown_filepath, "r") as file:
         markdown_content = file.read()
+
     lines = markdown_content.split('\n')
 
     for line in lines:
-        if line.startswith("title: "):
-            post_title = line.split("title: ", 1)[-1]
+        if line.startswith(frontmatter_item):
+            result = line.lstrip(f"{frontmatter_item}: ")
 
-    return post_title
+    return result
 
 def generate_page(post_title, post_description, html_lines):
     new_line = "\n"
@@ -247,14 +224,47 @@ def generate_page(post_title, post_description, html_lines):
     with open(output_path, "w") as html_file:
         html_file.write(html_template)
 
-# Generate a single page
-generate_page(get_post_title("src/markdown/about-calendars.md"), "This is a test description.",  html_lines_b_a_ul_ol_code)
+# The actual action
+for markdown_filepath in get_all_markdown_filepaths(markdown_src_directory):
+    html_lines = []
+    html_filename = markdown_filepath.split('/')[-1].strip('.md')
+    post_description = get_frontmatter_item(markdown_filepath, "description")
 
-# todo
-# get it to loop over all the markdown files inside of a directory
+    # Replace the bold ** with <b> tags
+    html_lines_b = []
+    for line in generate_html_from_markdown(markdown_filepath):
+        if "**" in line:
+            html_lines_b.append(replace_bold(line))
+        else:
+            html_lines_b.append(line)
 
-# done
-# write the html to the dist folder with the right file name
+    # Replace the ()[] with <a> tags
+    html_lines_b_a = []
+    for line in html_lines_b:
+        if "](" in line:
+            html_lines_b_a.append(replace_link(line))
+        else:
+            html_lines_b_a.append(line)
 
-# maybe
-# think about generating the paths for the images and videos programmatically
+    # Wrapping the numbered and unordered list needs to happens outside of the main function, because they need to have "visibility" over the whole list
+    html_lines_b_a_ul = wrap_list_with_prefix(html_lines_b_a, f"\t<li class=\"{ul_list_item_class}\">", "<ul>")
+    html_lines_b_a_ul_ol = wrap_list_with_prefix(html_lines_b_a_ul, f"\t<li class=\"{ol_list_item_class}\">", "<ol>")
+
+    # Now deal with the code block
+    html_lines_b_a_ul_ol_code = [] # Finished code!
+    count = 0
+    for line in html_lines_b_a_ul_ol:
+        if line.lower() == "<p>```</p>":
+            if count % 2 == 0: # it's an opening tag
+                new_line = f"""<div class=\"{code_block_class}\">"""
+                html_lines_b_a_ul_ol_code.append(new_line)
+                count += 1
+            else: # it's a closing tag
+                new_line = f"""</div>"""
+                html_lines_b_a_ul_ol_code.append(new_line)
+                count += 1
+        else: # don't do anything
+            html_lines_b_a_ul_ol_code.append(line)
+
+    # Generate a single page
+    generate_page(html_filename, post_description, html_lines_b_a_ul_ol_code)
