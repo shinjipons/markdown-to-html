@@ -1,6 +1,7 @@
 ---
 date: 2024-07-29
-title: "About Digital Calendars"
+title: About Digital Calendars
+description: Finding a new calendar system is not easy
 ---
 
 # About Digital Calendars
@@ -34,7 +35,7 @@ Apple Calendar and Google Calendar are the main choices in today's world. They a
 
 Apple Calendar offers a very poor experience for Windows users, perhaps willingly so. The web app is decent but nothing out of the ordinary.
 
-!()[media/about-calendars/icloud-web.png]
+!(This is a caption)[media/about-calendars/icloud-web.png]
 
 Its main downsides are:
 - lack of dark mode
